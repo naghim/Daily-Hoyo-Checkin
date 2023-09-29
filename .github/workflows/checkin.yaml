@@ -18,7 +18,7 @@ jobs:
           python-version: "3.x"
       - name: Save CHECKIN_CONFIG to config.json
         run: |
-          echo -n "${{ secrets.CHECKIN_CONFIG }}" > config.json
+          echo -n "${{ secrets.CHECKIN_CONFIG }}" | base64 -d > config.json
       - name: Install dependencies
         run: |
           python -m pip install -r requirements.txt
