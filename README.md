@@ -1,6 +1,6 @@
 # Daily Hoyo Checkin
 
-Aka a bot that checks in daily on a certain anime waifu/husbando collector website.
+Aka a bot that checks in daily on certain anime waifu/husbando collector websites: namely the _"Official Grasscutter"_ and _"Ruby on Starry Rails"_.
 
 # ltoken and ltuid Cookie Extraction Guide
 

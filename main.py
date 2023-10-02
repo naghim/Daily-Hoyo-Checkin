@@ -5,9 +5,22 @@ import requests
 import json
 
 # CONSTANTS
-ACT_ID = 'e202102251931481'
-URL_GET_STATUS = 'https://sg-hk4e-api.hoyolab.com/event/sol/info'
-URL_SIGN = 'https://sg-hk4e-api.hoyolab.com/event/sol/sign'
+GAME_NAMES = {
+    'genshin': 'Genshin Impact',
+    'starrail': 'Honkai Star Rail'
+}
+ACT_ID = {
+    'genshin': 'e202102251931481',
+    'starrail': 'e202303301540311'
+}
+URL_GET_STATUS = {
+    'genshin': 'https://sg-hk4e-api.hoyolab.com/event/sol/info',
+    'starrail': 'https://sg-public-api.hoyolab.com/event/luna/os/info'
+}
+URL_SIGN = {
+    'genshin': 'https://sg-hk4e-api.hoyolab.com/event/sol/sign',
+    'starrail': 'https://sg-public-api.hoyolab.com/event/luna/os/sign'
+}
 
 # REQUEST HEADER & PARAMS
 headers = {
@@ -31,13 +44,13 @@ class HoyolabCheckin(object):
         self.ltuid = ltuid
         self.cookies = {'ltoken': self.ltoken, 'ltuid': self.ltuid}
 
-    def get_status(self):
+    def get_status(self, game: str):
         params = (
             ('lang', 'en-us'),
-            ('act_id', ACT_ID)
+            ('act_id', ACT_ID[game])
         )
         response = requests.get(
-            URL_GET_STATUS,
+            URL_GET_STATUS[game],
             headers=headers,
             params=params,
             cookies=self.cookies,
@@ -50,15 +63,15 @@ class HoyolabCheckin(object):
 
         return data['data']['is_sign']
 
-    def sign(self):
+    def sign(self, game: str):
         params = (
             ('lang', 'en-us'),
         )
         data = {
-            'act_id': ACT_ID
+            'act_id': ACT_ID[game]
         }
         response = requests.post(
-            URL_SIGN,
+            URL_SIGN[game],
             headers=headers,
             params=params,
             cookies=self.cookies,
@@ -70,23 +83,32 @@ class HoyolabCheckin(object):
         if 'message' in data and data.get('retcode') != 0:
             raise CheckinException(data['message'])
 
-    def process(self):
-        try:
-            if not self.get_status():
-                self.sign()
+    def process_game(self, game: str):
+        name = GAME_NAMES[game]
 
-                if self.get_status():
-                    print(f'Daily check-in rewards have been successfully claimed for {self.name}!')
+        try:
+            if not self.get_status(game):
+                self.sign(game)
+
+                if self.get_status(game):
+                    print(f'Daily check-in rewards have been successfully claimed for {self.name} on {name}!')
                     return True
                 else:
-                    print(f'ERROR: Unable to claim daily check-in rewards for {self.name}...')
+                    print(f'ERROR: Unable to claim daily check-in rewards for {self.name} on {name}...')
             else:
-                print(f'Daily check-in rewards have already been claimed today for {self.name}!')
+                print(f'Daily check-in rewards have already been claimed today for {self.name} on {name}!')
                 return True
         except CheckinException as e:
-            print(f'Failed daily check-in for {self.name}: {e}')
+            print(f'Failed daily check-in for {self.name} on {name}: {e}')
 
         return False
+
+    def process(self):
+        for game in GAME_NAMES.keys():
+            if not self.process_game(game):
+                return False
+
+        return True
 
 if __name__ == '__main__':
     with open('config.json', 'r', encoding='utf-8') as f:
