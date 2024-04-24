@@ -38,11 +38,9 @@ class CheckinException(Exception):
 
 class HoyolabCheckin(object):
 
-    def __init__(self, name: str, ltoken: str, ltuid: str):
+    def __init__(self, name: str, cookies: dict[str, str]):
         self.name = name
-        self.ltoken = ltoken
-        self.ltuid = ltuid
-        self.cookies = {'ltoken': self.ltoken, 'ltuid': self.ltuid}
+        self.cookies = cookies
 
     def get_status(self, game: str):
         params = (
@@ -117,7 +115,7 @@ if __name__ == '__main__':
     success = True
 
     for account in data['accounts']:
-        checkin = HoyolabCheckin(account['name'], account['ltoken'], account['ltuid'])
+        checkin = HoyolabCheckin(account['name'], account['cookies'])
 
         if not checkin.process():
             success = False
