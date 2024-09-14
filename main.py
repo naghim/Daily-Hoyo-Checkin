@@ -7,19 +7,23 @@ import json
 # CONSTANTS
 GAME_NAMES = {
     'genshin': 'Genshin Impact',
-    'starrail': 'Honkai Star Rail'
+    'starrail': 'Honkai Star Rail',
+    'zenless': 'Zenless Zone Zero'
 }
 ACT_ID = {
     'genshin': 'e202102251931481',
-    'starrail': 'e202303301540311'
+    'starrail': 'e202303301540311',
+    'zenless':'e202406031448091'
 }
 URL_GET_STATUS = {
     'genshin': 'https://sg-hk4e-api.hoyolab.com/event/sol/info',
-    'starrail': 'https://sg-public-api.hoyolab.com/event/luna/os/info'
+    'starrail': 'https://sg-public-api.hoyolab.com/event/luna/os/info',
+    'zenless': 'https://sg-act-nap-api.hoyolab.com/event/luna/zzz/os/info'
 }
 URL_SIGN = {
     'genshin': 'https://sg-hk4e-api.hoyolab.com/event/sol/sign',
-    'starrail': 'https://sg-public-api.hoyolab.com/event/luna/os/sign'
+    'starrail': 'https://sg-public-api.hoyolab.com/event/luna/os/sign',
+    'zenless': 'https://sg-act-nap-api.hoyolab.com/event/luna/zzz/os/sign'
 }
 
 # REQUEST HEADER & PARAMS
