@@ -1,6 +1,6 @@
 # Daily Hoyo Checkin
 
-Aka a bot that checks in daily on certain anime waifu/husbando collector websites: namely the _"Official Grasscutter"_, _"Ruby on Starry Rails"_, and _"Tulburent Area #0"_.
+Aka a bot that checks in daily on certain anime waifu/husbando collector websites: namely the _"Official Grasscutter"_, _"Ruby on Starry Rails"_, and _"Turbulent Area #0"_.
 
 # ltoken and ltuid Cookie Extraction Guide
 
@@ -42,6 +42,8 @@ That's it! You have successfully extracted the ltoken and ltuid values from the 
   ]
 }
 ```
+> [!NOTE]  
+> These tokens have an expiration date. If the script stops functioning unexpectedly, log in again and replace the old tokens. This should restore the script's functionality.
 
 3. **(Optional) Healthcheck**: In case you want to check if the workflow is successful, sign up on [Healthchecks](https://healthchecks.io/) and put the health check URL into the healthcheck field.
 4. **Encode the config file into base64**: Visit [base64 encode](https://www.base64encode.org/) and encode the file in base64.
